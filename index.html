@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #00ff41; /* Hacker Green */
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 0;
+            overflow-y: auto;
+            min-height: 100vh;
+            padding-bottom: 100px; /* Extra space at bottom for scrolling */
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        /* The Overlay Screen */
+        #start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0d0d0d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 10;
+        }
+        #start-btn {
+            background-color: transparent;
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-family: 'Courier New', Courier, monospace;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+        #start-btn:hover {
+            background-color: #00ff41;
+            color: #0d0d0d;
+            box-shadow: 0 0 15px #00ff41;
+        }
+        
+        /* Text Styling */
+        p { margin: 15px 0; } /* More space between lines */
+        
+        /* GLOW EFFECT */
+        .glow {
+            color: #ff3333;
+            text-shadow: 0 0 10px #ff3333, 0 0 20px #ff0000;
+            font-weight: bold;
+        }
+
+        .heart {
+            color: #ff3333;
+            font-weight: bold;
+            text-shadow: 0 0 5px #ff3333;
+        }
+
+        /* IMAGE STYLE */
+        .fade-in-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 20px;
+            opacity: 0; 
+            animation: fadeIn 3s forwards;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.3);
+            display: block;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="start-screen">
+        <button id="start-btn">>> INITIALIZE SYSTEM <<</button>
+        <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;">(Please turn up your volume)</p>
+    </div>
+
+    <div class="container" id="terminal"></div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const startScreen = document.getElementById('start-screen');
+        const bgMusic = document.getElementById('bg-music');
+        
+        // ----------------------------------------------
+        // My Note to You
+        // ----------------------------------------------
+        
+        const myInsecurities = [
+            `>> System Booting Up... [${new Date().toLocaleString()}]`,
+            ">> Establishing Connection...",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+        ];
+        
+        const myReasons = [
+            ">> BUT HERE IS THE TRUTH:",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+            ">> UR_MESSAGE.",
+
+        ];
+        // ----------------------------------------------
+
+        async function typeText(text, delay = 80, className = '') {
+            const p = document.createElement('p');
+            if (className) p.classList.add(className);
+            terminal.appendChild(p);
+            
+
+            window.scrollTo(0, document.body.scrollHeight);
+
+            for (let i = 0; i < text.length; i++) {
+                p.textContent += text[i];
+                await new Promise(r => setTimeout(r, delay));
+            }
+            await new Promise(r => setTimeout(r, 600)); 
+        }
+
+        async function runSequence() {
+            startScreen.style.display = 'none';
+            
+            try {
+                bgMusic.volume = 0.3; 
+                bgMusic.play();
+            } catch (e) {
+                console.log("Audio failed to play automatically");
+            }
+
+            await new Promise(r => setTimeout(r, 1000)); 
+
+            // Part 1
+            for (let line of myInsecurities) {
+                await typeText(line);
+            }
+
+            await new Promise(r => setTimeout(r, 1500));
+            
+            // Part 2
+            for (let reason of myReasons) {
+                if (reason.includes("CHANGE_ME_GLOW")) {
+                    await typeText(reason, 150, 'glow'); 
+                } else {
+                    await typeText(reason, 100); 
+                }
+            }
+
+            // Part 3: THE PHOTO REVEAL 
+            await new Promise(r => setTimeout(r, 1000));
+            
+            const img = document.createElement('img');
+            
+            // CHANGED: Using ./us.jpg to be more specific
+            img.src = "./us.jpg"; 
+            
+            
+            
+            img.classList.add("fade-in-image");
+            terminal.appendChild(img);
+            
+            // Scroll once for the image
+            window.scrollTo(0, document.body.scrollHeight);
+
+            // Part 4: Final Heartbeat
+            await new Promise(r => setTimeout(r, 2000)); 
+            const finalP = document.createElement('p');
+            finalP.innerHTML = ">> CHANGE_THIS <span class='heart'>&hearts;</span>";
+            terminal.appendChild(finalP);
+            window.scrollTo(0, document.body.scrollHeight);
+            
+            setInterval(() => {
+                const heart = document.createElement('span');
+                heart.innerHTML = " &hearts;";
+                heart.style.color = "#ff3333";
+                terminal.appendChild(heart);
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 800);
+        }
+
+        document.getElementById('start-btn').addEventListener('click', runSequence);
+
+    </script>
+</body>
+</html>
