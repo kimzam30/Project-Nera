@@ -29,8 +29,7 @@ Note: The song.mp3 and us.jpg files are listed in .gitignore to prevent accident
 
 ### Clone the repository:
 
-```
-Bash
+```Bash
 git clone [https://github.com/yourusername/your-repo-name.git](https://github.com/yourusername/your-repo-name.git)
 ```
 
