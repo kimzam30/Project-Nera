@@ -1,64 +1,78 @@
-# 📟 Terminal-Style Animated Letter (Template)
+# Project Nera
 
-A web-based, interactive personal letter styled like a retro command-line interface (CLI). This project is designed as a **template** for creating a sentimental or romantic surprise.
+A single-file web page that delivers a personal letter as a retro terminal session — typewriter text, background music, and a timed image reveal. Built as a template: clone it, swap the words and media, send the link.
 
-It features a typewriter text effect, background audio, and a cinematic image reveal.
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/Vanilla_JS-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![No dependencies](https://img.shields.io/badge/dependencies-none-success?style=flat-square)
 
-## ✨ Features
+---
 
-- **Retro Aesthetic:** "Hacker Green" terminal text on a dark background.
-- **Immersive Audio:** Background music fades in upon initialization.
-- **Typewriter Effect:** JavaScript-driven text rendering mimicking real-time typing.
-- **Dynamic Reveal:** Two-stage message delivery followed by an image and heartbeat animation.
-- **Privacy Focused:** Media files are excluded by default so you can safely customize it.
+## What it is
 
-## 📂 Project Structure
+One `index.html` — markup, styles, and logic in a single file, zero dependencies, no build step. Open it in a browser and it runs.
 
-```text
-/project-root
-│
-├── index.html       # Main application file
-├── .gitignore       # Excludes specific media files (song.mp3, us.jpg)
-└── README.md        # Documentation
-Note: The song.mp3 and us.jpg files are listed in .gitignore to prevent accidental upload of sensitive media to public repositories.
+- **Terminal aesthetic** — phosphor-green monospace on black
+- **Typewriter rendering** — text types out character by character on a timer
+- **Audio** — background track fades in once the visitor interacts (browsers block autoplay until then)
+- **Staged reveal** — two message passages, then an image with a heartbeat animation
+- **Private by default** — the media files are gitignored, so forking the repo never exposes your photo or song
+
+---
+
+## Use it
+
+### 1. Clone
+
+```bash
+git clone https://github.com/kimzam30/Project-Nera.git
+cd Project-Nera
 ```
 
-## 🚀 How to Use (Local Setup)
+### 2. Add your media
 
-### **Since this is a template, you must add your own media assets before running it.**
+The repository ships without media on purpose. Add two files to the project root:
 
-### Clone the repository:
+| File | What |
+|---|---|
+| `song.mp3` | Background track |
+| `us.jpg` | The image revealed at the end |
 
-```Bash
-git clone [https://github.com/yourusername/your-repo-name.git](https://github.com/yourusername/your-repo-name.git)
+Both are listed in `.gitignore` — they will not be committed if you push your copy.
+
+### 3. Write your letter
+
+Open `index.html` and edit:
+
+| What | Where |
+|---|---|
+| Message passages | The `myInsecurities` and `myReasons` arrays (~line 115) |
+| Closing message | `finalP.innerHTML` (~line 182) |
+| Pacing | The delay values in `runSequence()` — tune these to your track |
+
+### 4. Preview
+
+Open `index.html` in a browser. Audio needs a click first, so trigger the sequence rather than expecting sound on load.
+
+---
+
+## Deploying
+
+Because the media is gitignored, **connecting this repo to Netlify or Vercel will deploy a version with no music and no image**. Deploy the local folder directly instead:
+
+**Netlify drop** — go to [app.netlify.com/drop](https://app.netlify.com/drop) and drag your project folder (with `song.mp3` and `us.jpg` in it) onto the page. You get a live URL immediately.
+
+**Vercel CLI**
+
+```bash
+npx vercel --prod
 ```
 
-- Add your assets:
-- Find a song you like and rename it to song.mp3.
-- Find a photo you want to reveal and rename it to us.jpg.
-- Move both files into the root folder of the project.
-- Open index.html in your browser to test.
+Run it from the folder containing your media — the CLI uploads local files rather than pulling from git.
 
-## 🛠️ Configuration
+---
 
-### To customize the text, open index.html in your code editor.
+## License
 
-- Edit the Conversation: Locate the myInsecurities and myReasons arrays near line 115 in the JavaScript section.
-- Edit the Final Message: Locate finalP.innerHTML near line 182.
-- Adjust Timing: You can tweak the delay values in the runSequence() function to match the tempo of your song.
-
-## ☁️ Deployment (Netlify Manual Drop)
-
-### **Because this repository excludes the media files, you cannot use Netlify's "Import from GitHub" feature directly, or your site will launch without music or images.**
-
-### Follow these steps to deploy your full version:
-
-- Prepare your Local Folder: Ensure your local project folder contains index.html, song.mp3, and us.jpg.
-- Log in to Netlify: Go to Netlify.com and log in.
-- Navigate to Sites: Go to the "Sites" tab in your dashboard.
-- Drag & Drop: Drag your entire project folder from your computer and drop it into the box that says "Drag and drop your site output folder here".
-- Done! Netlify will upload your assets and give you a live URL instantly.
-
-#
-
-### **_This project is open source and available for personal use._**
+MIT — see [LICENSE](LICENSE). Use it, fork it, rewrite it for whoever you're writing to.
